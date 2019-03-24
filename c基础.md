@@ -364,7 +364,21 @@ typedef struct Node
 {
     ElemType data;              //单链表中的数据域
     struct Node *next;          //单链表的指针域
-}Node,*LinkedList;
+} Node, *LinkedList;
+
+/* typedef struct Node
+ * {
+ *     ElemType data;              //单链表中的数据域
+ *     struct Node *next;          //单链表的指针域
+ * } aaa, bbb;
+ * 等价于：
+ * typedef struct Node
+ * {
+ *     ElemType data;              //单链表中的数据域
+ *     struct Node *next;          //单链表的指针域
+ * } aaa;
+ * typedef aaa bbb; */
+
 ////////////////////////////////////////////
 //单链表的初始化
 LinkedList LinkedListInit()
