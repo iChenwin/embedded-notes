@@ -496,6 +496,144 @@ int main()
     return 0;
 }
 ```
+```
+#include <stdio.h>
+#include <stdlib.h>
+
+typedef int ElemType;
+
+typedef struct Node
+{
+    ElemType val;
+    struct Node *next;
+} Node, *LinkedList;
+
+//第一个节点不存放数据，即head只向第一个节点，head的val为0，第一个节点是head->next
+LinkedList creatLinkedList(int n)
+{
+    Node *head, *node, *end;
+    head = (Node *)malloc(sizeof(Node));
+    head->next = NULL;
+    end = head;
+    
+    int i = 0;
+    for (; i < n; i++)
+    {
+        node = (LinkedList)malloc(sizeof(Node));
+        scanf("%d", &node->val);
+        end->next = node;
+        node->next = NULL;
+        end = node;
+    }
+    
+    end->next = NULL;
+    return head;
+}
+
+int printLinkedList(LinkedList list)
+{
+    while (NULL != list->next)
+    {
+        list = list->next;
+        printf("%d ", list->val);
+    }
+    
+    printf("\n");
+    return 0;    
+}
+
+int modifyNode(LinkedList list, int n)
+{
+    if (NULL != list->next)
+    {
+        int i = 0;
+        while (i < n && NULL != list)
+        {
+            list = list->next;
+            i++;
+        }
+    } else {
+        printf("Err: list is null!\r\n");
+        return -1;
+    }
+    
+    printf("input your new value to replace value@[%d]: ", n);
+    scanf("%d", &list->val);
+    
+    return 0;
+}
+
+int deleteNode(LinkedList list, int n)
+{
+    Node *node;
+    if (NULL != list->next)
+    {
+        int i = 0;
+        while (i < n && NULL != list)
+        {
+            //上一个节点
+            node = list;
+            //当前节点，即要删除的节点
+            list = list->next;
+            i++;
+        }
+    } else {
+        printf("Err:list is null!\r\n");
+        return -1;
+    }
+    
+    if (NULL != list)
+    {
+        node->next = list->next;
+        free(list);
+    } else {
+        printf("Err: node[%d] not exist\r\n", n);
+        return -2;
+    }
+    
+    return 0;
+}
+
+int insertNode(LinkedList list, int n)
+{
+    Node *node = NULL;
+    int i = 0;
+    while (i < n && NULL != list)
+    {
+        list = list->next;
+        i++;
+    }
+    
+    if (i < n || NULL == list)
+    {
+        printf("Err: cann't find node[%d]\r\n", n);
+        return -1;
+    } else {
+        node = (Node *)malloc(sizeof(Node));
+        printf("input value to insert after [%d]: ", n);
+        scanf("%d", &node->val);
+        node->next = list->next;
+        list->next = node;
+    }
+    
+    return 0;
+}
+
+int main(void)
+{
+    LinkedList list;
+    list = creatLinkedList(5);
+    modifyNode(list, 2);
+    deleteNode(list, 6);
+    insertNode(list, 6);
+    insertNode(list, 5);
+    printLinkedList(list);
+    insertNode(list, 3);
+    printLinkedList(list);
+    
+    return 0;
+}
+```
 
 ## 排序算法
 * [选择排序](#选择排序)
